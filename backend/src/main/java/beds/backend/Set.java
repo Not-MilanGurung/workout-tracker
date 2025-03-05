@@ -37,6 +37,15 @@ public class Set {
         this.restTime = restTime;
         this.isComplete = true;
     }
+
+    public void displayInfo(){
+        System.out.println("MetricA: "+metricA);
+        System.out.println("MetricB: "+metricB);
+        System.out.println("Set Type: "+type);
+        System.out.println("Rest Time: "+restTime);
+        System.out.println("Completion status: "+isComplete);
+    }
+
     /**
      * Sets the value of {@link #metricA}
      * @param metricA First metric

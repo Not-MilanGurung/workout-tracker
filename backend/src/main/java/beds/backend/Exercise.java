@@ -18,6 +18,7 @@ public class Exercise {
         this.name = name;
         this.metricAType = metricAType;
         this.primaryMuscle = primaryMuscleGroup;
+        this.sets = new ArrayList<Set>();
     }
 
     public Exercise(String name, MetricType metricAType, MetricType metricBType, MuscleGroup primarMuscleGroup){
@@ -25,6 +26,7 @@ public class Exercise {
         this.metricAType = metricAType;
         this.metricBType = metricBType;
         this.primaryMuscle = primarMuscleGroup;
+        this.sets = new ArrayList<Set>();
     }
 
     public Exercise(String name, MetricType metricAType, MetricType metricBType, MuscleGroup primarMuscleGroup,
@@ -37,6 +39,20 @@ public class Exercise {
         this.restTime = restTime;
     }
     
+    /** Test output */
+    public void displayInfo(){
+        System.out.println("Name: "+name);
+        System.out.println("MetricA: "+metricAType);
+        System.out.println("MetricB: "+metricBType);
+        System.out.println("Primary Muscle: "+primaryMuscle);
+        System.out.println("Rest time: "+restTime);
+        System.out.println("No of sets: "+sets.size());
+        for (int i = 1; i <= sets.size(); i++){
+            System.out.println("Info of  set "+i);
+            sets.get(i-1).displayInfo();
+            System.out.println();
+        }
+    }
 
     /**
      * Add a set to the exercise

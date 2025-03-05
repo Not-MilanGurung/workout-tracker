@@ -1,10 +1,18 @@
 package beds.enums;
 
 public enum MuscleGroup {
-    FOREARMS, BICEPS, TRICEPS,
-    SHOULDERS, TRAPS,
-    CHEST,
-    BACK, LATS,
-    ABDOMINAL, OBLIQUES,
-    QUADRICEPS, HAMSTRINGS, CALVES
+    FOREARMS(1), BICEPS(2), TRICEPS(3),
+    SHOULDERS(4), TRAPS(5),
+    CHEST(6),
+    UPPER_BACK(7), LOWER_BACK(8), LATS(9),
+    ABDOMINAL(10), OBLIQUES(11),
+    QUADRICEPS(12), HAMSTRINGS(13), CALVES(14), GLUTES(15),
+    CARDIO(16), OTHERS(17), FULL_BODY(18);
+
+    private int id;
+    private MuscleGroup(int id){
+        this.id = id;
+    }
+
+    public int getID(){ return id;}
 }

@@ -3,4 +3,5 @@ module beds.backend {
 
     exports beds.enums;
     exports beds.backend;
+	exports beds.database;
 }

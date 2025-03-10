@@ -9,6 +9,7 @@ import java.sql.Types;
 import beds.enums.EquipmentType;
 import beds.enums.MetricType;
 import beds.enums.MuscleGroup;
+import beds.enums.SetType;
 
 public class InitiliseDefaultTableData {
     private static Connection con;
@@ -47,12 +48,21 @@ public class InitiliseDefaultTableData {
         stmt.close();
     }
 
+	public static void initialiseSetTypeTable() throws SQLException {
+		stmt = con.prepareStatement("INSERT INTO SetType Values (?, ?)");
+        for (SetType type: SetType.values()){
+            stmt.setInt(1, type.getID());
+            stmt.setString(2, type.toString());
+            stmt.addBatch();
+        }
+        stmt.executeBatch();
+        stmt.close();
+	}
    
 
     public static void main(String[] args) {
         DatabaseConnection.main(args);
         con = DatabaseConnection.con;
-        int result = -1;
 		try{
             initialiseMetricTypeTable();
 			System.out.println("MetricTypeTable initialised");
@@ -62,6 +72,8 @@ public class InitiliseDefaultTableData {
 			System.out.println("EquipmentTypeTable initialised");
 			defaultExercises();
 			System.out.println("Default exercise table initialised");
+			initialiseSetTypeTable();
+			System.out.println("SetType table initialised");
 
 			
             con.commit();

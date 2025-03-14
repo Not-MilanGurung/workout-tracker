@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="beds.main.PrimaryController">
-   <children>
-      <Label text="Login Page" />
-      <Button fx:id="primaryButton" text="Switch to Register" onAction="#switchToRegister"/>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+
+<GridPane fx:controller="beds.main.controllers.LoginController"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="center" hgap="10" vgap="10">
+
+    <Label text="Workout Tracker - Login" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-size: 18px;"/>
+
+    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Button text="Login" fx:id="loginButton" onAction="#handleLogin" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Hyperlink text="Don't have an account? Register" onAction="#toRegister" fx:id="registerLink" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+</GridPane>

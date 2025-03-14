@@ -8,7 +8,9 @@ import java.sql.Statement;
 public class Query {
     public static void main(String[] args) {
         try {
-            DatabaseConnection.main(args);
+            if (DatabaseConnection.con == null){
+				DatabaseConnection.main(args);
+			}
             Connection con = DatabaseConnection.con;
             Statement stmt = con.createStatement();
 

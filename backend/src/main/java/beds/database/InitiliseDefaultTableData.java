@@ -61,7 +61,9 @@ public class InitiliseDefaultTableData {
    
 
     public static void main(String[] args) {
-        DatabaseConnection.main(args);
+		if (DatabaseConnection.con == null){
+			DatabaseConnection.main(args);
+		}
         con = DatabaseConnection.con;
 		try{
             initialiseMetricTypeTable();

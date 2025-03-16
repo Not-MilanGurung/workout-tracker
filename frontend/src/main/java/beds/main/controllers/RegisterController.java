@@ -36,7 +36,7 @@ public class RegisterController {
 
 	@FXML
 	private void toLogin() throws IOException {
-		App.setRoot("login");
+		App.setRoot("fxmls/login");
 	}
 }
 

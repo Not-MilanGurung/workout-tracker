@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import beds.enums.MetricType;
 import beds.enums.MuscleGroup;
 
+/** Represents a exercise */
 public class Exercise {
     protected String name;
     protected MetricType metricAType;
@@ -14,6 +15,12 @@ public class Exercise {
     protected Time restTime;
     protected ArrayList<Set> sets;
 
+	/**
+	 * Basic constructor with only one metric and empty  sets list
+	 * @param name of the exercise
+	 * @param metricAType metric type 
+	 * @param primaryMuscleGroup targeted by the exercise
+	 */
     public Exercise(String name, MetricType metricAType, MuscleGroup primaryMuscleGroup){
         this.name = name;
         this.metricAType = metricAType;
@@ -21,6 +28,13 @@ public class Exercise {
         this.sets = new ArrayList<Set>();
     }
 
+	/**
+	 * Basic constructor for exercise with two metrics and empty sets list 
+	 * @param name of the exercise
+	 * @param metricAType metric type of first metric
+	 * @param metricBType metric typr of second metric
+	 * @param primarMuscleGroup targeted by the exercise
+	 */
     public Exercise(String name, MetricType metricAType, MetricType metricBType, MuscleGroup primarMuscleGroup){
         this.name = name;
         this.metricAType = metricAType;
@@ -29,6 +43,15 @@ public class Exercise {
         this.sets = new ArrayList<Set>();
     }
 
+	/**
+	 * Constructor for exercises with defined sets (i.e. recored workouts or routine)
+	 * @param name Name of the exercise
+	 * @param metricAType metric type of metric A
+	 * @param metricBType metric type of metric B
+	 * @param primarMuscleGroup primary musclegroup
+	 * @param sets ArrayList of sets
+	 * @param restTime rest time between sets
+	 */
     public Exercise(String name, MetricType metricAType, MetricType metricBType, MuscleGroup primarMuscleGroup,
             ArrayList<Set> sets, Time restTime){
         this.name = name;

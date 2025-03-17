@@ -25,8 +25,11 @@ public class Set {
      * @param restTime Rest time defined in the parent exercise
      */
     public Set(Time restTime) {
+		this.metricA = new SimpleIntegerProperty(0);
+		this.metricB = new SimpleIntegerProperty(0);
         this.type = SetType.NORMAL;
         this.restTime = new SimpleLongProperty(restTime.getTime());
+		this.isComplete = new SimpleBooleanProperty(false);
     }
 
     /**
@@ -48,23 +51,23 @@ public class Set {
      * Sets the value of {@link #metricA}
      * @param metricA First metric
      */
-    public void setMetricA(int metricA) {
-        this.metricA.set(metricA);
-    }
+    public void setMetricA(int metricA) {this.metricA.set(metricA);}
     /**
      * Gets the value of the first metric of the set
      * @return {@link #metricA}
      */
     public int getMetricA() { return this.metricA.get();}
+	/**
+	 * Get the metricA integer property 
+	 * @return {@link #metricA}
+	 */
 	public IntegerProperty getMetricAProperty() {return this.metricA;}
     
     /**
      * Sets the value of {@link #metricB}
      * @param metricB Second metric
      */
-    public void setMetricB(int metricB) {
-        this.metricB.set(metricB);
-    }
+    public void setMetricB(int metricB) {this.metricB.set(metricB);}
     /**
      * Gets the value of the second metric of the set
      * @return {@link #metricB}

@@ -1,48 +1,28 @@
 package beds.main.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
-
-import beds.backend.Workout;
 import beds.main.App;
+import beds.backend.Workout;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 
 
 public class DashboardController {
-	@FXML private ListView<Workout> workoutListView;
-    @FXML private Button addWorkoutButton;
+    @FXML private Button startEmptyWorkoutButton;
+
 
     @FXML
-    public void initialize() {
-        loadWorkouts();
-        workoutListView.setOnMouseClicked(event -> openWorkoutDetails());
-    }
+    private void handleStartEmptyWorkout() throws IOException {
+		FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/startWorkout.fxml"));
+		CurrentWorkoutController controller = loader.getController();
+		Workout emptyWorkout = new Workout();
+		controller.setWorkout(emptyWorkout);
 
-    private void loadWorkouts() {
-        List<Workout> workouts = DatabaseManager.getAllWorkouts();
-        workoutListView.getItems().setAll(workouts);
-    }
-
-    @FXML
-    private void handleAddWorkout() throws IOException {
-        App.setRoot("fxmls/addWorkout");
-    }
-
-    private void openWorkoutDetails() {
-        Workout selectedWorkout = workoutListView.getSelectionModel().getSelectedItem();
-        if (selectedWorkout != null) {
-            try {
-				FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/WorkoutDetails.fxml"));
-                App.setRoot("fxmls/workoutDetails");
-				WorkoutDetailsController controller = loader.getController();
-				controller.setWorkout(selectedWorkout);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+		Parent newRoot = loader.load();
+        App.setRoot(newRoot);
     }
 }

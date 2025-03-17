@@ -36,20 +36,17 @@ public class Exercise {
 		this.equipmentType = equipmentType;
 		this.restTime = new SimpleLongProperty(restTime);
 	}
-    
-
 
     /**
      * Returns the name of the exercise
      * @return {@link #name}
      */
     public String getName() {return this.name.get();}
-	public StringProperty getNamProperty() {return this.name;}
-    /**
-     * Sets the {@link #name} of the exercise
-     * @param name String
-     */
-    public void setName(String name) {this.name.set(name);;}
+	/**
+	 * Get name property for javafx
+	 * @return {@link #name}
+	 */
+	public StringProperty getNameProperty() {return this.name;}
 
     /**
      * Returns the {@link MetricType} of metric A of the sets of the exercise
@@ -57,21 +54,11 @@ public class Exercise {
      */
     public MetricType getMetricAType() {return this.metricAType;}
     /**
-     * Sets the {@link MetricType} of {@link #metricAType metric A} of the sets of the exercise
-     * @param metricType of {@link MetricType} class type
-     */
-    public void setMetricAType(MetricType metricType) {this.metricAType = metricType;}
-    
-    /**
      * Returns the {@link MetricType} of metric B of the sets of the exercise
      * @return {@link #metricBType}
      */
     public MetricType getMetricBType() {return this.metricBType;}
-    /**
-     * Sets the {@link MetricType} of {@link #metricBType metric b} of the sets of the exercise
-     * @param metricType of {@link MetricType} class type
-     */
-    public void setMetricBType(MetricType metricType) {this.metricBType = metricType;}
+
     
     /**
      * Returns the primary {@link MuscleGroup muscle group} targeted by the exercise
@@ -79,16 +66,26 @@ public class Exercise {
      */
     public MuscleGroup getPrimaryMuscle() {return this.primaryMuscle;}
     /**
-     * Set the {@link #primaryMuscle primary muscle group} targeted by the exercise
-     * @param muscleGroup
+     * Returns the secondary {@link MuscleGroup muscle group} targeted by the exercise
+     * @return {@link #secondaryMuscle}
      */
-    public void setPrimaryMuscle(MuscleGroup muscleGroup) {this.primaryMuscle = muscleGroup;}
+    public MuscleGroup getSecondaryMuscle() {return this.secondaryMuscle;}
+
+	/**
+	 * Returns the equipment type used for the exercise
+	 * @return {@link #equipmentType}
+	 */
+	public EquipmentType getEquipmentType() {return this.equipmentType;}
 
     /**
      * Gets the default rest time between sets of the exercise
      * @return {@link #restTime}
      */
-    public Time getRestTime() {return new Time(this.restTime.get());}
+    public Long getRestTime() {return this.restTime.get();}
+	/**
+	 * Get the rest time property for javafx
+	 * @return
+	 */
 	public LongProperty getRestTimProperty() {return this.restTime;}
     /**
      * Sets the default rest time between sets of the exercise

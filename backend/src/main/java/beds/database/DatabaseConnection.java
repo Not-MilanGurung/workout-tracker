@@ -5,10 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import beds.backend.Workout;
 
 /** This class handles the singleton connection to the database */
 public class DatabaseConnection {
@@ -56,20 +53,6 @@ public class DatabaseConnection {
 			res.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}
-
-	public static List<Workout> getAllWorkouts() throws SQLException{
-		List<Workout> tenRecentWorkout = new ArrayList<Workout>();
-		Connection con = getConnection();
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Workouts WHERE UserID=0 OR UserID = ?");
-		stmt.setInt(1, userID);
-		ResultSet res = stmt.executeQuery();
-	
-		Workout w = new Workout();
-		while (res.next()){
-			w.setName(res.getString("Name"));
-			w.setDate(res.getString("DateTime"));
 		}
 	}
 }

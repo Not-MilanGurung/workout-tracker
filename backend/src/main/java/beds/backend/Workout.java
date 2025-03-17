@@ -1,14 +1,26 @@
 package beds.backend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import beds.enums.MuscleGroup;
 /**
  * Class that represents a workout. Has the ability to manage exercises
  */
 public class Workout {
-    protected String name;
+    protected StringProperty name = new SimpleStringProperty();
     protected ArrayList<Exercise> exercises = new ArrayList<Exercise>();
-    protected int noOfSets;
+    protected IntegerProperty noOfSets = new SimpleIntegerProperty();
+	protected Map<MuscleGroup, IntegerProperty> muscleSplit = new HashMap<>();
+	protected StringProperty datetime;
+	protected LongProperty completionTime;
 
 	/**
 	 * Removes the exercise from the workout
@@ -31,8 +43,11 @@ public class Workout {
 	 * @return {@link #noOfSets}
 	 */
     public int getNoOfSets(){
-        return this.noOfSets;
+        return this.noOfSets.get();
     }
+	public IntegerProperty getNoOfSetsProperty() {
+		return this.noOfSets;
+	}
 
 	/**
 	 * Test program to increase the number of sets. Will be 
@@ -41,7 +56,7 @@ public class Workout {
 	 */
     public void incrementNoOfSets(int numOfSets){
         if (numOfSets > 0)
-        this.noOfSets += numOfSets;
+        this.noOfSets.set(this.noOfSets.get() + numOfSets);
     }
 
 	/**
@@ -61,22 +76,11 @@ public class Workout {
 	 * Sets the name of the workout
 	 * @param name of the workout
 	 */
-    public void setName(String name){ this.name = name;}
+    public void setName(String name){ this.name.set(name);}
 	/**
 	 * Get the name of the workout
 	 * @return {@link #name}
 	 */
-    public String getName() {return this.name;}
-
-    /** Test output */
-    public void displayInfo(){
-        System.out.println("Name: "+name);
-        System.out.println("No of sets: " + noOfSets);
-        System.out.println("No of exercise: "+exercises.size());
-        for (int i =1; i <= exercises.size(); i++){
-            System.out.println("Info of exercise "+i);
-            exercises.get(i-1).displayInfo();
-            System.out.println();
-        }
-    }
+    public String getName() {return this.name.get();}
+	public StringProperty getNameProperty () {return this.name;}
 }

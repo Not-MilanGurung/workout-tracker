@@ -10,6 +10,7 @@ import beds.enums.EquipmentType;
 import beds.enums.MetricType;
 import beds.enums.MuscleGroup;
 import beds.enums.SetType;
+import beds.security.HashAndCheck;
 
 public class InitiliseDefaultTableData {
     private static Connection con;
@@ -58,13 +59,18 @@ public class InitiliseDefaultTableData {
         stmt.executeBatch();
         stmt.close();
 	}
+
+	public static void initialiseBasicUser() throws SQLException {
+		stmt = con.prepareStatement("INSERT INTO Users (Username, Hash) Values (?, ?)");
+		stmt.setString(1, "User");
+		stmt.setString(2, HashAndCheck.getHash("user"));
+		stmt.executeUpdate();
+		stmt.close();
+	}
    
 
-    public static void main(String[] args) {
-		if (DatabaseConnection.con == null){
-			DatabaseConnection.main(args);
-		}
-        con = DatabaseConnection.con;
+    public static void main(Connection mainCon) {
+        con = mainCon;
 		try{
             initialiseMetricTypeTable();
 			System.out.println("MetricTypeTable initialised");
@@ -72,6 +78,8 @@ public class InitiliseDefaultTableData {
 			System.out.println("MuscleGroupTable initialised");
 			initialiseEquipmentTypeTable();
 			System.out.println("EquipmentTypeTable initialised");
+			initialiseBasicUser();
+			System.out.println("Default User: username=User and pass=user initilised");
 			defaultExercises();
 			System.out.println("Default exercise table initialised");
 			initialiseSetTypeTable();
@@ -79,7 +87,6 @@ public class InitiliseDefaultTableData {
 
 			
             con.commit();
-			con.close();
 		}
 		catch (SQLException e){
 			e.printStackTrace(System.out);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+
+<VBox fx:controller="beds.main.controllers.WorkoutDetailsController"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10" alignment="CENTER"
+      stylesheets="@../css/dashboardStyle.css">
+
+    <Label text="Workout Details" style="-fx-font-size: 22px; -fx-text-fill: white;"/>
+
+    <ListView fx:id="exerciseListView"/>
+
+    <Button text="+ Add Exercise" fx:id="addExerciseButton" onAction="#handleAddExercise"/>
+</VBox>

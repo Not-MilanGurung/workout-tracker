@@ -1,5 +1,6 @@
 module beds.backend {
     requires transitive java.sql;
+	requires transitive javafx.base;
 	requires bcrypt;
 
     exports beds.enums;

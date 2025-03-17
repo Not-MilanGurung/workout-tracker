@@ -8,10 +8,7 @@ import java.sql.Statement;
 public class Query {
     public static void main(String[] args) {
         try {
-            if (DatabaseConnection.con == null){
-				DatabaseConnection.main(args);
-			}
-            Connection con = DatabaseConnection.con;
+            Connection con = DatabaseConnection.getConnection();
             Statement stmt = con.createStatement();
 
             ResultSet result = stmt.executeQuery("Select * from Exercises");

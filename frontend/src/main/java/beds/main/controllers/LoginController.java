@@ -7,6 +7,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import java.io.IOException;
 
+import beds.database.DatabaseConnection;
 import beds.main.App;
 import beds.security.Authentication;
 
@@ -20,15 +21,16 @@ public class LoginController {
 	@FXML private Label errorLabel = new Label();
 
 	@FXML
-	public void handleLogin() {
+	public void handleLogin() throws IOException {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
 
 		if (Authentication.authenticateUser(username, password)) {
-			errorLabel.setText("Login successful!");
+			DatabaseConnection.setID(username);
+			App.setRoot("fxmls/dashboard");
 			// Redirect to Dashboard
 		} else {
-			errorLabel.setText("Invalid username or password.");
+			System.err.println("Invalid credentials");
 		}
 	}
 

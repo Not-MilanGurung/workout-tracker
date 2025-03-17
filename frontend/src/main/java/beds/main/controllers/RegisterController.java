@@ -23,14 +23,14 @@ public class RegisterController {
 		String confirmPassword = confirmPasswordField.getText();
 
 		if (!password.equals(confirmPassword)) {
-			errorLabel.setText("Passwords do not match!");
+			System.err.println("Passwords do not match");
 			return;
 		}
 
 		if (Authentication.registerUser(username, password)) {
-			errorLabel.setText("Registration successful! Go to login.");
+			System.err.println("Registration successful! Go to login.");
 		} else {
-			errorLabel.setText("Username already exists.");
+			System.err.println("Username already exists.");
 		}
 	}
 

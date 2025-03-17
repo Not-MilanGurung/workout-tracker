@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+
+<BorderPane fx:controller="beds.main.controllers.DashboardController"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css/dashboardStyle.css">
+
+    <top>
+        <HBox alignment="CENTER_RIGHT" spacing="20" style="-fx-padding: 15px;">
+            <Label text="Workout Tracker" style="-fx-font-size: 24px; -fx-text-fill: white;"/>
+            <Button text="+ Add Workout" fx:id="addWorkoutButton" onAction="#handleAddWorkout"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ListView fx:id="workoutListView"/>
+    </center>
+</BorderPane>

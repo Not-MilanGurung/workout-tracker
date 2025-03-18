@@ -2,27 +2,26 @@ package beds.main.controllers;
 
 import java.io.IOException;
 
-import beds.main.App;
 import beds.backend.Workout;
-
+import beds.main.App;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
-
 public class DashboardController {
-    @FXML private Button startEmptyWorkoutButton;
+	
+	@FXML
+	private Button startEmptyWorkoutButton;
+	
+	@FXML
+	private void handleStartEmptyWorkout() throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/currentWorkout.fxml"));
+		Parent root = loader.load();
 
-
-    @FXML
-    private void handleStartEmptyWorkout() throws IOException {
-		FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/startWorkout.fxml"));
 		CurrentWorkoutController controller = loader.getController();
-		Workout emptyWorkout = new Workout();
-		controller.setWorkout(emptyWorkout);
+		controller.setWorkout(new Workout());
 
-		Parent newRoot = loader.load();
-        App.setRoot(newRoot);
+		App.setRoot(root);
     }
 }

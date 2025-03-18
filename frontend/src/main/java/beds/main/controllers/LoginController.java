@@ -7,7 +7,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import java.io.IOException;
 
-import beds.database.DatabaseConnection;
 import beds.main.App;
 import beds.security.Authentication;
 
@@ -26,7 +25,6 @@ public class LoginController {
 		String password = passwordField.getText();
 
 		if (Authentication.authenticateUser(username, password)) {
-			DatabaseConnection.setID(username);
 			App.setRoot("fxmls/dashboard");
 			// Redirect to Dashboard
 		} else {

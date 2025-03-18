@@ -10,7 +10,7 @@
 <GridPane fx:controller="beds.main.controllers.RegisterController"
           xmlns:fx="http://javafx.com/fxml"
           alignment="center" hgap="10" vgap="10" 
-		  stylesheets="@../css/loginStyle.css">
+		  stylesheets="@../css/style_1.css">
 
     <Label text="Workout Tracker - Register" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-size: 18px;"/>
 

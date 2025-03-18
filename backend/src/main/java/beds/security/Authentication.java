@@ -26,13 +26,19 @@ public class Authentication {
 
     public static boolean authenticateUser(String username, String password) {
         try (Connection conn = DatabaseConnection.getConnection()){
-             PreparedStatement stmt = conn.prepareStatement("SELECT Hash FROM Users WHERE Username = ?");
+             PreparedStatement stmt = conn.prepareStatement("SELECT Hash, UserID FROM Users WHERE Username = ?");
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 String storedHash = rs.getString("Hash");
-                return HashAndCheck.checkPass(password, storedHash);
+                if(HashAndCheck.checkPass(password, storedHash)){
+					DatabaseConnection.setID(rs.getInt("UserID"));
+					return true;
+				}
+				else{
+					return false;
+				}
             }
         } catch (SQLException e) {
             e.printStackTrace();

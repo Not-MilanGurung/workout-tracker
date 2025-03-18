@@ -2,8 +2,6 @@ package beds.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -38,21 +36,5 @@ public class DatabaseConnection {
 		return mainCon;
     }
 
-	public static void setID(String username){
-		Connection con = getConnection();
-
-		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT UserID FROM Users WHERE Username=?");
-			stmt.setString(1, username);
-			ResultSet res = stmt.executeQuery();
-
-			if (res.next()){
-				userID = res.getInt("UserID");
-			}
-			stmt.close();
-			res.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	public static void setID(int userID){ DatabaseConnection.userID = userID;}
 }

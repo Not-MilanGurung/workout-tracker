@@ -11,7 +11,7 @@
 <GridPane fx:id="loginGridPane" fx:controller="beds.main.controllers.LoginController"
           xmlns:fx="http://javafx.com/fxml"
           alignment="center" hgap="10" vgap="10"
-		  stylesheets="@../css/loginStyle.css">
+		  stylesheets="@../css/style_1.css">
 
     <Label fx:id="loginTitleLable" text="Workout Tracker - Login" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-size: 18px;"/>
 

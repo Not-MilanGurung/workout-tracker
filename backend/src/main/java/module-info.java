@@ -1,7 +1,7 @@
 module beds.backend {
     requires transitive java.sql;
 	requires transitive javafx.base;
-	requires bcrypt;
+	requires at.favre.lib.bcrypt;
 
     exports beds.enums;
     exports beds.backend;

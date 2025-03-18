@@ -24,7 +24,6 @@ hs_err_pid*
 replay_pid*
 # ignoring the compiled files
 target
-database
 
 # adding exception to the modularized jar files needed 
 !bcrypt-0.10.2.jar

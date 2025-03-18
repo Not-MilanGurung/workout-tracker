@@ -1,18 +1,16 @@
-/* Root background */
+
 .root {
     -fx-background-color: #121212;
     -fx-font-family: "Arial";
 }
 
-/* Labels */
 Label {
     -fx-text-fill: white;
     -fx-font-size: 18px;
 }
 
-/* Buttons */
 Button {
-    -fx-background-color: #1DB954; /* Green like Strong App */
+    -fx-background-color: #1DB954; 
     -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-padding: 12px 20px;
@@ -26,7 +24,7 @@ Button:hover {
     -fx-scale-y: 1.05;
 }
 
-/* Table */
+
 TableView {
     -fx-background-color: #1e1e1e;
     -fx-border-color: #333;

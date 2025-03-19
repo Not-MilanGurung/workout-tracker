@@ -16,7 +16,7 @@ public class DashboardController {
 	
 	@FXML
 	private void handleStartEmptyWorkout() throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/currentWorkout.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/currentWorkout-test.fxml"));
 		Parent root = loader.load();
 
 		CurrentWorkoutController controller = loader.getController();

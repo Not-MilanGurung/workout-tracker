@@ -24,6 +24,21 @@ Button:hover {
     -fx-scale-y: 1.05;
 }
 
+HBox {
+	-fx-background-color: #111;
+	-fx-padding: 20px;
+}
+
+VBox {
+	-fx-background-color: #111;
+	-fx-padding: 20px;
+}
+
+ScrollPane {
+	-fx-background-color: #111;
+	-fx-padding: 20px;
+
+}
 
 TableView {
     -fx-background-color: #1e1e1e;

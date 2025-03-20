@@ -5,30 +5,30 @@ import java.sql.Time;
 import beds.enums.SetType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 
 /**
  * Class representing a set of a exercise in a workout 
  */
 public class Set {
+	protected IntegerProperty setNo;
     protected IntegerProperty metricA;
     protected IntegerProperty metricB;
     protected SetType type;
-    protected LongProperty restTime;
+    protected IntegerProperty restTime;
     protected BooleanProperty isComplete;
 
     /**
      * Constructor for when creating a new set for a exercise
      * @param restTime Rest time defined in the parent exercise
      */
-    public Set(Long restTime) {
+    public Set(int setNo, int restTime) {
+		this.setNo = new SimpleIntegerProperty(setNo);
 		this.metricA = new SimpleIntegerProperty(0);
 		this.metricB = new SimpleIntegerProperty(0);
         this.type = SetType.NORMAL;
-        this.restTime = new SimpleLongProperty(restTime);
+        this.restTime = new SimpleIntegerProperty(restTime);
 		this.isComplete = new SimpleBooleanProperty(false);
     }
 
@@ -39,13 +39,17 @@ public class Set {
      * @param type Type of set
      * @param restTime Rest time
      */
-    public Set(int metricA, int metricB, SetType type, Time restTime) {
+    public Set(int metricA, int metricB, SetType type, int restTime) {
         this.metricA = new SimpleIntegerProperty(metricA);
         this.metricB = new SimpleIntegerProperty(metricB);
         this.type = type;
-        this.restTime = new SimpleLongProperty(restTime.getTime());
+        this.restTime = new SimpleIntegerProperty(restTime);
         this.isComplete = new SimpleBooleanProperty(true);
     }
+
+	public IntegerProperty getSetNoProperty() {return this.setNo;}
+	public int getSetNo() {return this.setNo.get();}
+	public void setSetNo(int setNo) {this.setNo.set(setNo);}
 
     /**
      * Sets the value of {@link #metricA}
@@ -79,15 +83,16 @@ public class Set {
      * Set the {@link #restTime rest time} after the exercise is completed
      * @param restTime ({@link Time})
      */
-    public void setRestTime(Time restTime) {
+    public void setRestTime(int restTime) {
         if (type == SetType.DROPSET) this.restTime.set(0); 
-        else this.restTime.set(restTime.getTime());
+        else this.restTime.set(restTime);
     }
     /**
      * Get the rest time after the exercise is completed
      * @return {@link #restTime}
      */
     public Time getRestTime() {return new Time(this.restTime.get());}
+	public IntegerProperty getRestTimProperty() {return this.restTime;}
 
     /**
      * Acts as a flip switch that sets the {@link #isComplete} to true and false

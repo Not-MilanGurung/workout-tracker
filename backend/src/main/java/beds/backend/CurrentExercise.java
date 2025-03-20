@@ -10,7 +10,7 @@ public class CurrentExercise extends Exercise {
 	private ArrayList<Set> sets;
 
 	public CurrentExercise(int id, String name, MetricType metricA, MetricType metricB, MuscleGroup primaryMuscle,
-			MuscleGroup secondaryMuscle, EquipmentType equipmentType, long restTime) {
+			MuscleGroup secondaryMuscle, EquipmentType equipmentType, int restTime) {
 				
 		super(id, name, metricA, metricB, primaryMuscle, secondaryMuscle, equipmentType, restTime);
 		this.sets = new ArrayList<Set>();

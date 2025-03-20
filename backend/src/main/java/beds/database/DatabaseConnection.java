@@ -53,8 +53,7 @@ public class DatabaseConnection {
 
 		ResultSet res = stmt.executeQuery();
 		ArrayList<Exercise> exercises = new ArrayList<Exercise>();
-		int id, metricAType, metricBType, primaryMuscle, secondaryMuscle, equipmentType;
-		Long restTime;
+		int id, metricAType, metricBType, primaryMuscle, secondaryMuscle, equipmentType, restTime;
 		String name;
 		Exercise ex;
 		while (res.next()){
@@ -65,7 +64,7 @@ public class DatabaseConnection {
 			primaryMuscle = res.getInt("PrimaryMuscle");
 			secondaryMuscle = res.getInt("SecondaryMuscle");
 			equipmentType = res.getInt("EquipmentType");
-			restTime = res.getTime("RestTime").getTime();
+			restTime = res.getTime("RestTime").toLocalTime().getSecond();
 
 			ex = new Exercise(id, name, MetricType.getByID(metricAType), 
 				MetricType.getByID(metricBType), 

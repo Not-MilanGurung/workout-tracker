@@ -6,9 +6,7 @@ import beds.enums.EquipmentType;
 import beds.enums.MetricType;
 import beds.enums.MuscleGroup;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -21,11 +19,11 @@ public class Exercise {
     protected MuscleGroup primaryMuscle;
     protected MuscleGroup secondaryMuscle;
 	protected EquipmentType equipmentType;
-    protected LongProperty restTime;
+    protected IntegerProperty restTime;
 
 	public Exercise(int id, String name, MetricType metricA, MetricType metricB,
 			MuscleGroup primaryMuscle, MuscleGroup secondaryMuscle, EquipmentType equipmentType,
-			long restTime){
+			int restTime){
 		
 		this.id = new SimpleIntegerProperty(id);
 		this.name = new SimpleStringProperty(name);
@@ -34,7 +32,7 @@ public class Exercise {
 		this.primaryMuscle = primaryMuscle;
 		this.secondaryMuscle = secondaryMuscle;
 		this.equipmentType = equipmentType;
-		this.restTime = new SimpleLongProperty(restTime);
+		this.restTime = new SimpleIntegerProperty(restTime);
 	}
 	public int getID() {return this.id.get();}
 
@@ -82,16 +80,16 @@ public class Exercise {
      * Gets the default rest time between sets of the exercise
      * @return {@link #restTime}
      */
-    public Long getRestTime() {return this.restTime.get();}
+    public int getRestTime() {return this.restTime.get();}
 	/**
 	 * Get the rest time property for javafx
 	 * @return
 	 */
-	public LongProperty getRestTimProperty() {return this.restTime;}
+	public IntegerProperty getRestTimProperty() {return this.restTime;}
     /**
      * Sets the default rest time between sets of the exercise
      * @param restTime ({@link Time})
      */
-    public void setRestTime(Long restTime) {this.restTime.set(restTime);}
+    public void setRestTime(int restTime) {this.restTime.set(restTime);}
 
 }

@@ -10,4 +10,12 @@ public enum EquipmentType {
 	}
 
 	public int getID(){return id;}
+
+	public static EquipmentType getByID(int id){
+		for (EquipmentType e : EquipmentType.values())
+			if (e.getID() == id)
+				return e;
+
+		return null;
+	}
 }

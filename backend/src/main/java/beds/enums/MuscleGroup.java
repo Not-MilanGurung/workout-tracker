@@ -15,4 +15,11 @@ public enum MuscleGroup {
     }
 
     public int getID(){ return id;}
+
+	public static MuscleGroup getByID(int id){
+		for (MuscleGroup g : MuscleGroup.values())
+			if (g.getID() == id)
+				return g;
+		return null;
+	}
 }

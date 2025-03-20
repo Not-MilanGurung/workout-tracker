@@ -24,11 +24,11 @@ public class Set {
      * Constructor for when creating a new set for a exercise
      * @param restTime Rest time defined in the parent exercise
      */
-    public Set(Time restTime) {
+    public Set(Long restTime) {
 		this.metricA = new SimpleIntegerProperty(0);
 		this.metricB = new SimpleIntegerProperty(0);
         this.type = SetType.NORMAL;
-        this.restTime = new SimpleLongProperty(restTime.getTime());
+        this.restTime = new SimpleLongProperty(restTime);
 		this.isComplete = new SimpleBooleanProperty(false);
     }
 

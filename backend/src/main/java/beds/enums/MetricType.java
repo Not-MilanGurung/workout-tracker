@@ -8,4 +8,11 @@ public enum MetricType {
     }
 
     public int getID(){return id;}
+	public static MetricType getByID(int id){
+		for (MetricType t : MetricType.values()){
+			if (t.getID() == id)
+				return t;
+		}
+		return null;
+	}
 }

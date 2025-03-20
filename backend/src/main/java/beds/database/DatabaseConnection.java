@@ -2,7 +2,15 @@ package beds.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import beds.backend.Exercise;
+import beds.enums.EquipmentType;
+import beds.enums.MetricType;
+import beds.enums.MuscleGroup;
 
 
 /** This class handles the singleton connection to the database */
@@ -37,4 +45,35 @@ public class DatabaseConnection {
     }
 
 	public static void setID(int userID){ DatabaseConnection.userID = userID;}
+
+	public static ArrayList<Exercise> getAllExercises() throws SQLException{
+		Connection con = getConnection();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Exercises WHERE UserID=0 OR UserID=? ORDER BY Name");
+		stmt.setInt(1, userID);
+
+		ResultSet res = stmt.executeQuery();
+		ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+		int id, metricAType, metricBType, primaryMuscle, secondaryMuscle, equipmentType;
+		Long restTime;
+		String name;
+		Exercise ex;
+		while (res.next()){
+			id = res.getInt("Id");
+			name = res.getString("Name");
+			metricAType = res.getInt("MetricAType");
+			metricBType = res.getInt("MetricBType");
+			primaryMuscle = res.getInt("PrimaryMuscle");
+			secondaryMuscle = res.getInt("SecondaryMuscle");
+			equipmentType = res.getInt("EquipmentType");
+			restTime = res.getTime("RestTime").getTime();
+
+			ex = new Exercise(id, name, MetricType.getByID(metricAType), 
+				MetricType.getByID(metricBType), 
+				MuscleGroup.getByID(primaryMuscle), MuscleGroup.getByID(secondaryMuscle), 
+				EquipmentType.getByID(equipmentType), restTime);
+			
+			exercises.add(ex);
+		}
+		return exercises;
+	}
 }

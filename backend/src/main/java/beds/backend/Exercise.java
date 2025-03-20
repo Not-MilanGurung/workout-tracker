@@ -36,6 +36,7 @@ public class Exercise {
 		this.equipmentType = equipmentType;
 		this.restTime = new SimpleLongProperty(restTime);
 	}
+	public int getID() {return this.id.get();}
 
     /**
      * Returns the name of the exercise

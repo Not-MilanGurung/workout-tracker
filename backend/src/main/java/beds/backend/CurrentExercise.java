@@ -16,6 +16,12 @@ public class CurrentExercise extends Exercise {
 		this.sets = new ArrayList<Set>();
 	}
 
+	public CurrentExercise(Exercise e){
+		super(e.getID(), e.getName(), e.getMetricAType(), e.getMetricBType(), e.getPrimaryMuscle(), 
+			e.getSecondaryMuscle(), e.getEquipmentType(), e.getRestTime());
+		this.sets = new ArrayList<Set>();
+	}
+
 	/**
 	 * Adds the set to the arraylist
 	 * @param s

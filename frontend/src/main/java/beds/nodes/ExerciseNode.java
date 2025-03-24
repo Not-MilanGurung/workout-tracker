@@ -1,10 +1,7 @@
 package beds.nodes;
 
 import beds.backend.CurrentExercise;
-import beds.backend.Exercise;
 import beds.backend.Set;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -19,17 +16,15 @@ import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.Button;
 
 public class ExerciseNode extends GridPane {
-	public CurrentExercise exercise;
-	private TableView<Set> sets = new TableView<Set>();
-	private final ObservableList<Set> data;
+	public final CurrentExercise exercise;
+	private TableView<Set> setsTable = new TableView<Set>();
 	private final Button addSetButton;
 	private final Button removeSetButton;
 	
 	@SuppressWarnings("unchecked")
-	public ExerciseNode(Exercise e){
-		this.exercise = new CurrentExercise(e);
+	public ExerciseNode(CurrentExercise e){
+		this.exercise = e;
 
-		this.data = FXCollections.observableArrayList();
 
 		this.setPadding(new Insets(20));
         this.setVgap(10);
@@ -51,9 +46,9 @@ public class ExerciseNode extends GridPane {
 		
         this.getRowConstraints().addAll(row1, row2, row3);
 		
-		this.sets.setEditable(true);
+		this.setsTable.setEditable(true);
 
-		this.add(new Label(e.getName()), 0, 0);
+		this.add(new Label(e.getName() + " (" +e.getEquipmentType() +")"), 0, 0);
 		// Set no column
 		TableColumn<Set, Integer> setsNoColumn = new TableColumn<>("Set");
 		setsNoColumn.setCellValueFactory(data -> data.getValue().getSetNoProperty().asObject());
@@ -64,51 +59,55 @@ public class ExerciseNode extends GridPane {
 		metricA.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		metricA.setOnEditCommit(event -> event.getRowValue().setMetricA(event.getNewValue()));
 		// Metric B column
-		TableColumn<Set, Integer> metricB = new TableColumn<>(e.getMetricBType().toString());
-		metricB.setCellValueFactory(data -> data.getValue().getMetricBProperty().asObject());
-		metricB.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		metricB.setOnEditCommit(event -> event.getRowValue().setMetricB(event.getNewValue()));
+		TableColumn<Set, Integer> metricB;
+		try {
+			metricB = new TableColumn<>(e.getMetricBType().toString());
+			metricB.setCellValueFactory(data -> data.getValue().getMetricBProperty().asObject());
+			metricB.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+			metricB.setOnEditCommit(event -> event.getRowValue().setMetricB(event.getNewValue()));
+		} catch (Exception e1) {
+			metricB = new TableColumn<>("");
+		}
 
 		// Completed Column (Checkbox)
         TableColumn<Set, Boolean> completedColumn = new TableColumn<>("Completed");
         completedColumn.setCellValueFactory(data -> data.getValue().getIsCompleteProperty());
         completedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(completedColumn));
 		// Rest time column
-		TableColumn<Set, Integer> restTimeColumn = new TableColumn<>("Rest Time s");
+		TableColumn<Set, Integer> restTimeColumn = new TableColumn<>("Rest Time");
 		restTimeColumn.setCellValueFactory(data -> data.getValue().getRestTimProperty().asObject());
 		restTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		restTimeColumn.setOnEditCancel(event -> event.getRowValue().setRestTime(event.getNewValue()));
 
-		sets.getColumns().addAll(setsNoColumn, metricA, metricB, completedColumn, restTimeColumn);
-		sets.setItems(data);
+		setsTable.getColumns().addAll(setsNoColumn, metricA, metricB, completedColumn, restTimeColumn);
+		setsTable.setItems(exercise.getSets());
 
 		
-		sets.setPrefWidth(250.0);
-        sets.setMaxWidth(Double.MAX_VALUE);  // Allow expansion
-        sets.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+		setsTable.setPrefWidth(250.0);
+        setsTable.setMaxWidth(Double.MAX_VALUE);  // Allow expansion
+        setsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
-		add(sets, 0, 1, 2, 1);
-		setHgrow(sets, Priority.SOMETIMES);
+		this.add(setsTable, 0, 1, 2, 1);
 		
 		addSetButton = new Button("Add Set");
 		addSetButton.setOnAction(event -> addSet());
-		add(this.addSetButton, 0, 2, 1, 1);
+		this.add(this.addSetButton, 0, 2, 1, 1);
 
 		removeSetButton = new Button("Remove Set");
 		removeSetButton.setOnAction(event -> removeSelectedSet());
-		add(this.removeSetButton, 0, 2, 1, 1);
+		this.add(this.removeSetButton, 1, 2, 1, 1);
 
 	}
 
 	private void addSet(){
-		int nextSetNo = data.size() + 1;
-		data.add(new Set(nextSetNo, exercise.getRestTime()));
+		int nextSetNo = exercise.getSets().size() + 1;
+		exercise.getSets().add(new Set(nextSetNo, exercise.getRestTime()));
 	}
 
 	private void removeSelectedSet() {
-        Set selected = sets.getSelectionModel().getSelectedItem();
+        Set selected = setsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            data.remove(selected);
+            exercise.getSets().remove(selected);
         }
     }
 

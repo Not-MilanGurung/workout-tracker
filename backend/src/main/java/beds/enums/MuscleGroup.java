@@ -7,7 +7,7 @@ public enum MuscleGroup {
     UPPER_BACK(7), LOWER_BACK(8), LATS(9),
     ABDOMINAL(10), OBLIQUES(11),
     QUADRICEPS(12), HAMSTRINGS(13), CALVES(14), GLUTES(15),
-    CARDIO(16), OTHERS(17), FULL_BODY(18);
+    CARDIO(16), OTHERS(17), FULL_BODY(18), ANY(19);
 
     private int id;
     private MuscleGroup(int id){

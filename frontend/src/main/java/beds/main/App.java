@@ -17,8 +17,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("fxmls/login"), 600, 400);
+        scene = new Scene(loadFXML("fxmls/login"), 1200, 800);
         stage.setScene(scene);
+		stage.setTitle("Workout Tracker");
         stage.show();
     }
 

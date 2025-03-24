@@ -1,10 +1,10 @@
 package beds.backend;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -14,13 +14,15 @@ import javafx.beans.property.StringProperty;
  */
 public class Workout {
     protected StringProperty name;
-    protected ArrayList<Exercise> exercises;
-	protected LongProperty completionTime;
+    protected ArrayList<CurrentExercise> exercises;
+	protected IntegerProperty completionTime;
+	protected LocalDateTime dateTime;
 
 	public Workout(){
 		this.name = new SimpleStringProperty();
-		this.exercises = new ArrayList<Exercise>();
-		this.completionTime = new SimpleLongProperty(0l);
+		this.exercises = new ArrayList<CurrentExercise>();
+		this.completionTime = new SimpleIntegerProperty(0);
+		this.dateTime = LocalDateTime.now();
 	}
 
 	/**
@@ -33,13 +35,13 @@ public class Workout {
 	 * Adds the exercise to the exercise arraylist
 	 * @param e Exercise to add
 	 */
-    public void addExercise(Exercise e){exercises.add(e);}
+    public void addExercise(CurrentExercise e){exercises.add(e);}
 
 	/**
 	 * Get the array list of exercises of the workout
 	 * @return {@link #exercises}
 	 */
-	public ArrayList<Exercise> getExercises(){return this.exercises;}
+	public ArrayList<CurrentExercise> getExercises(){return this.exercises;}
 
 	/**
 	 * Sets the name of the workout
@@ -56,4 +58,9 @@ public class Workout {
 	 * @return {@link #name}
 	 */
 	public StringProperty getNameProperty () {return this.name;}
+
+	public int getCompletionTime() {return completionTime.get();}
+
+	public LocalDateTime getDateTime() {return this.dateTime;}
+	public void setDateTime(LocalDateTime newDateTime) {this.dateTime = newDateTime;}
 }

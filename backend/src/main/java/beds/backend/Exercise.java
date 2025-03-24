@@ -1,6 +1,5 @@
 package beds.backend;
 
-import java.sql.Time;
 
 import beds.enums.EquipmentType;
 import beds.enums.MetricType;
@@ -88,7 +87,7 @@ public class Exercise {
 	public IntegerProperty getRestTimProperty() {return this.restTime;}
     /**
      * Sets the default rest time between sets of the exercise
-     * @param restTime ({@link Time})
+     * @param restTime 
      */
     public void setRestTime(int restTime) {this.restTime.set(restTime);}
 

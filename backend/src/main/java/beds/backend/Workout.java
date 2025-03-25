@@ -3,7 +3,9 @@ package beds.backend;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,12 +19,14 @@ public class Workout {
     protected ArrayList<CurrentExercise> exercises;
 	protected IntegerProperty completionTime;
 	protected LocalDateTime dateTime;
+	private BooleanProperty isRoutine;
 
 	public Workout(){
 		this.name = new SimpleStringProperty();
 		this.exercises = new ArrayList<CurrentExercise>();
 		this.completionTime = new SimpleIntegerProperty(0);
 		this.dateTime = LocalDateTime.now();
+		this.isRoutine = new SimpleBooleanProperty(false);
 	}
 
 	/**
@@ -63,4 +67,8 @@ public class Workout {
 
 	public LocalDateTime getDateTime() {return this.dateTime;}
 	public void setDateTime(LocalDateTime newDateTime) {this.dateTime = newDateTime;}
+
+	public void setIsRoutine(boolean isRoutine) {this.isRoutine.set(isRoutine);}
+	public boolean getIsRoutine() {return this.isRoutine.get();}
+	public BooleanProperty getIsRoutineProperty() {return this.isRoutine;}
 }

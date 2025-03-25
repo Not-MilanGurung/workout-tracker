@@ -7,6 +7,8 @@ import beds.backend.Workout;
 import beds.main.App;
 import beds.nodes.ExerciseNode;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -37,8 +39,14 @@ public class CurrentWorkoutController {
 	}
 	
 	@FXML
-	private void handleFinishWorkout(){
-		System.out.println("Finished workout");
+	private void handleFinishWorkout() throws IOException{
+		FXMLLoader loader = new FXMLLoader((App.class.getResource("fxmls/workoutForm.fxml")));
+		Parent newRoot = loader.load();
+
+		WorkoutFormController controller = loader.getController();
+		controller.setWorkout(workout);
+
+		App.setRoot(newRoot);
 	}
 	
 	public static void addExercise(CurrentExercise e){

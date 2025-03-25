@@ -1,12 +1,10 @@
 package beds.database;
 
-import java.lang.Thread.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +84,7 @@ public class DatabaseConnection {
 	public static void storeWorkout(Workout w) throws SQLException{
 		Connection con = getConnection();
 		PreparedStatement stmt = con.prepareStatement(
-			"INSERT INTO Workouts (UserID, Name, CompletionTime, DateTime) VALUE(?, ?, ?, ?)",
+			"INSERT INTO Workouts (UserID, Name, CompletionTime, DateTime) VALUES(?, ?, ?, ?)",
 			PreparedStatement.RETURN_GENERATED_KEYS);
 
 		stmt.setInt(1, userID);
@@ -94,8 +92,8 @@ public class DatabaseConnection {
 		stmt.setInt(3, w.getCompletionTime());
 		stmt.setTimestamp(4, Timestamp.valueOf(w.getDateTime()));
 
-		ResultSet workouResultSet = stmt.executeQuery();
-		stmt.close();
+		stmt.executeUpdate();
+		ResultSet workouResultSet = stmt.getGeneratedKeys();
 		int workoutID;
 
 		while(workouResultSet.next()){
@@ -114,7 +112,6 @@ public class DatabaseConnection {
 			stmt.executeBatch();
 
 			ResultSet workoutExersiResultSet = stmt.getGeneratedKeys();
-			stmt.close();
 			while(workoutExersiResultSet.next()){
 				int workoutExerciseId = workoutExersiResultSet.getInt("Id");
 				stmt = con.prepareStatement(
@@ -125,11 +122,17 @@ public class DatabaseConnection {
 						stmt.setInt(2, workoutExerciseId);
 						stmt.setInt(3, set.getMetricA());
 						stmt.setInt(4, set.getMetricB());
-						stmt.setInt(5, set.getSet);
+						stmt.setInt(5, set.getType().getID());
+						stmt.setInt(6, set.getRestTime());
+						stmt.addBatch();
 					}
 				}
 			}
+			stmt.executeBatch();
+			stmt.close();
+			workoutExersiResultSet.close();
 		}
+		workouResultSet.close();
 
 	}
 }

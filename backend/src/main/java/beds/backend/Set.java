@@ -91,7 +91,7 @@ public class Set {
      * Get the rest time after the exercise is completed
      * @return {@link #restTime}
      */
-    public Time getRestTime() {return new Time(this.restTime.get());}
+    public int getRestTime() {return this.restTime.get();}
 	public IntegerProperty getRestTimProperty() {return this.restTime;}
 
     /**
@@ -108,4 +108,15 @@ public class Set {
     public boolean getIsComplete(){
         return this.isComplete.get();
     }
+
+	/**
+	 * Get the type of the set
+	 * @return {@link #type}
+	 */
+	public SetType getType() {return this.type;}
+	/**
+	 * Set the type of the set
+	 * @param type Type of the set
+	 */
+	public void setType(SetType type) {this.type = type;}
 }

@@ -129,13 +129,14 @@ public class DatabaseConnection {
 	public static void storeWorkout(Workout w) throws SQLException{
 		Connection con = getConnection();
 		PreparedStatement stmt = con.prepareStatement(
-			"INSERT INTO Workouts (UserID, Name, CompletionTime, DateTime) VALUES(?, ?, ?, ?)",
+			"INSERT INTO Workouts (UserID, Name, CompletionTime, DateTime, IsRoutine) VALUES(?, ?, ?, ?, ?)",
 			PreparedStatement.RETURN_GENERATED_KEYS);
 
 		stmt.setInt(1, userID);
 		stmt.setString(2, w.getName());
 		stmt.setInt(3, w.getCompletionTime());
 		stmt.setTimestamp(4, Timestamp.valueOf(w.getDateTime()));
+		stmt.setBoolean(5, w.getIsRoutine());
 
 		stmt.executeUpdate();
 		ResultSet workouResultSet = stmt.getGeneratedKeys();
@@ -146,32 +147,34 @@ public class DatabaseConnection {
 			stmt = con.prepareStatement(
 				"INSERT INTO WorkoutExercise (WorkoutID, ExerciseID, OrderNo) VALUES(?, ?, ?)",
 				PreparedStatement.RETURN_GENERATED_KEYS);
-			
-			for (CurrentExercise e : w.getExercises()){
+			ArrayList<CurrentExercise> exercises = w.getExercises();
+			for(int i = 0; i < exercises.size(); i++){
+				CurrentExercise e = exercises.get(i);
 				stmt.setInt(1, workoutID);
 				stmt.setInt(2, e.getID());
-				stmt.setInt(3, w.getExercises().indexOf(e));
+				stmt.setInt(3, i);
 				stmt.addBatch();
 			}
 
 			stmt.executeBatch();
 
 			ResultSet workoutExersiResultSet = stmt.getGeneratedKeys();
+			int i = 0;
 			while(workoutExersiResultSet.next()){
 				int workoutExerciseId = workoutExersiResultSet.getInt("Id");
 				stmt = con.prepareStatement(
 					"INSERT INTO Sets VALUES(?, ?, ?, ?, ?, ?)");
-				for(CurrentExercise ex : w.getExercises()){
-					for (Set set : ex.getSets()){
-						stmt.setInt(1, ex.getSets().indexOf(set));
-						stmt.setInt(2, workoutExerciseId);
-						stmt.setInt(3, set.getMetricA());
-						stmt.setInt(4, set.getMetricB());
-						stmt.setInt(5, set.getType().getID());
-						stmt.setInt(6, set.getRestTime());
-						stmt.addBatch();
-					}
+				CurrentExercise ex = exercises.get(i);
+				for (Set set : ex.getSets()){
+					stmt.setInt(1, ex.getSets().indexOf(set));
+					stmt.setInt(2, workoutExerciseId);
+					stmt.setInt(3, set.getMetricA());
+					stmt.setInt(4, set.getMetricB());
+					stmt.setInt(5, set.getType().getID());
+					stmt.setInt(6, set.getRestTime());
+					stmt.addBatch();
 				}
+				i++;
 			}
 			stmt.executeBatch();
 			stmt.close();

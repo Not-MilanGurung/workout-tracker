@@ -49,8 +49,25 @@ public class DatabaseConnection {
 		return mainCon;
     }
 
+	/**
+	 * Sets the userID for the current session.
+	 * This is used to filter the exercises and workouts for the current user.
+	 * @param userID
+	 */
 	public static void setID(int userID){ DatabaseConnection.userID = userID;}
+	/**
+	 * Returns the userID for the current session.
+	 * This is used to filter the exercises and workouts for the current user.
+	 * @return {@link #userID} User ID
+	 */
+	public static int getUserID(){ return userID;}
 
+	/**
+	 * Returns the list of all exercises in the database.
+	 * This is used to filter the exercises for the current user.
+	 * @return {@link List<Exercise>} List of all exercises
+	 * @throws SQLException
+	 */
 	public static List<Exercise> getAllExercises() throws SQLException{
 		Connection con = getConnection();
 		PreparedStatement stmt = con.prepareStatement("SELECT * FROM Exercises WHERE UserID=0 OR UserID=? ORDER BY Name");
@@ -79,6 +96,34 @@ public class DatabaseConnection {
 			exercises.add(ex);
 		}
 		return exercises;
+	}
+	
+	/**
+	 * Returns the list of recent workouts for the current user.
+	 * @param num Number of workouts to return
+	 * @return {@link List<Workout>} List of recent workouts
+	 */
+	public static List<Workout> getRecentWorkouts(int num){
+		Connection con = getConnection();
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement("SELECT * FROM Workouts WHERE UserID=? ORDER BY DateTime DESC LIMIT ?");
+			stmt.setInt(1, DatabaseConnection.userID);
+			stmt.setInt(2, num);
+			ResultSet res = stmt.executeQuery();
+			ArrayList<Workout> workouts = new ArrayList<Workout>();
+			while (res.next()){
+				Workout w = new Workout();
+				w.setName(res.getString("Name"));
+				w.setCompletionTime(res.getInt("CompletionTime"));
+				w.setDateTime(res.getTimestamp("DateTime").toLocalDateTime());
+				workouts.add(w);
+			}
+			return workouts;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static void storeWorkout(Workout w) throws SQLException{

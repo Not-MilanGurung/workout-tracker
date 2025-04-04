@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import beds.enums.EquipmentType;
+import beds.enums.GoalType;
 import beds.enums.MetricType;
 import beds.enums.MuscleGroup;
 import beds.enums.SetType;
@@ -66,23 +67,27 @@ public class InitiliseDefaultTableData {
 		stmt.executeUpdate();
 		stmt.close();
 	}
-   
 
+	public static void initialiseGoalTypeTable() throws SQLException {
+		stmt = con.prepareStatement("INSERT INTO GoalType Values (?, ?)");
+		for (GoalType type: GoalType.values()){
+			stmt.setInt(1, type.getId());
+			stmt.setString(2, type.toString());
+			stmt.addBatch();
+		}
+		stmt.executeBatch();
+		stmt.close();
+	}
     public static void main(Connection mainCon) {
         con = mainCon;
 		try{
             initialiseMetricTypeTable();
-			System.out.println("MetricTypeTable initialised");
 			initialiseMuscleGroupTable();
-			System.out.println("MuscleGroupTable initialised");
 			initialiseEquipmentTypeTable();
-			System.out.println("EquipmentTypeTable initialised");
+			initialiseGoalTypeTable();
 			initialiseBasicUser();
-			System.out.println("Default User: username=User and pass=user initilised");
 			defaultExercises();
-			System.out.println("Default exercise table initialised");
 			initialiseSetTypeTable();
-			System.out.println("SetType table initialised");
 
 			
             con.commit();
@@ -90,6 +95,7 @@ public class InitiliseDefaultTableData {
 		catch (SQLException e){
 			e.printStackTrace(System.out);
 		}
+		System.out.println("Default data initialised successfully.");
     }
 
 	public static void defaultExercises() throws SQLException{

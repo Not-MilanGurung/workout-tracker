@@ -64,6 +64,8 @@ public class Workout {
 	public StringProperty getNameProperty () {return this.name;}
 
 	public int getCompletionTime() {return completionTime.get();}
+	public void setCompletionTime(int newCompletionTime) {this.completionTime.set(newCompletionTime);}
+	public IntegerProperty getCompletionTimeProperty() {return this.completionTime;}
 
 	public LocalDateTime getDateTime() {return this.dateTime;}
 	public void setDateTime(LocalDateTime newDateTime) {this.dateTime = newDateTime;}

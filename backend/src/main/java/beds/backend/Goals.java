@@ -1,24 +1,55 @@
 package beds.backend;
 
-public interface Goals {
-    /** Method for when the goal is met */
-    void metGoal();
+import java.time.LocalDateTime;
 
-    /** Method for setting the goal */
-    void setGoal();
+import beds.enums.GoalType;
 
-    /** Method for getting the goal */
-    void getGoal();
+public class Goals {
+	private LocalDateTime goalDeadLine;
+	private LocalDateTime goalAchievedDateTime;
+	private LocalDateTime goalStartDateTime;
+	private GoalType goalType;
 
-    /** Set the dead line of the goal */
-    void setGoalDeadline();
 
-    /** Get the dead line of the goal */
-    void getGoalDeadline();
-
-    /** Set the datetime of when the goal was achieved */
-    void setGoalAchievedDateTime();
-
-    /** Get the datetime of when the goal was achieved */
-    void getGoalAchievedDateTime();
-}
+	public Goals(LocalDateTime goalDeadLine, GoalType goalType) {
+		this.goalDeadLine = goalDeadLine;
+		this.goalAchievedDateTime = null;
+		this.goalStartDateTime = LocalDateTime.now();
+		this.goalType = goalType;
+	}
+	
+	public LocalDateTime getGoalDeadLine() {
+		return goalDeadLine;
+	}
+	public void setGoalDeadLine(LocalDateTime goalDeadLine) {
+		this.goalDeadLine = goalDeadLine;
+	}
+	public LocalDateTime getGoalAchievedDateTime() {
+		return goalAchievedDateTime;
+	}
+	public void setGoalAchievedDateTime(LocalDateTime goalAchievedDateTime) {
+		this.goalAchievedDateTime = goalAchievedDateTime;
+	}
+	public LocalDateTime getGoalStartDateTime() {
+		return goalStartDateTime;
+	}
+	public void setGoalStartDateTime(LocalDateTime goalStartDateTime) {
+		this.goalStartDateTime = goalStartDateTime;
+	}
+	
+	public boolean isGoalAchieved() {
+		return goalAchievedDateTime != null;
+	}
+	public boolean isGoalExpired() {
+		return LocalDateTime.now().isAfter(goalDeadLine);
+	}
+	public boolean isGoalActive() {
+		return !isGoalExpired() && !isGoalAchieved();
+	}
+	public GoalType getGoalType() {
+		return goalType;
+	}
+	public void setGoalType(GoalType goalType) {
+		this.goalType = goalType;
+	}
+} 

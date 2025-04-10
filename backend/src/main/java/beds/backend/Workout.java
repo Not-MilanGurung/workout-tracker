@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
  * Class that represents a workout. Has the ability to manage exercises
  */
 public class Workout {
+	private IntegerProperty id;
     protected StringProperty name;
     protected ArrayList<CurrentExercise> exercises;
 	protected IntegerProperty completionTime;
@@ -22,6 +23,7 @@ public class Workout {
 	private BooleanProperty isRoutine;
 
 	public Workout(){
+		this.id = new SimpleIntegerProperty();
 		this.name = new SimpleStringProperty();
 		this.exercises = new ArrayList<CurrentExercise>();
 		this.completionTime = new SimpleIntegerProperty(0);
@@ -29,6 +31,19 @@ public class Workout {
 		this.isRoutine = new SimpleBooleanProperty(false);
 	}
 
+	public Workout(int id, String name, int completionTime, LocalDateTime dateTime, boolean isRoutine){
+		this.id = new SimpleIntegerProperty(id);
+		this.name = new SimpleStringProperty(name);
+		this.exercises = new ArrayList<CurrentExercise>();
+		this.completionTime = new SimpleIntegerProperty(completionTime);
+		this.dateTime = dateTime;
+		this.isRoutine = new SimpleBooleanProperty(isRoutine);
+	}
+
+	public int getId() {return id.get();}
+	public void setId(int id) {this.id.set(id);}
+	public IntegerProperty getIdProperty() {return this.id;}
+	
 	/**
 	 * Removes the exercise from the workout
 	 * @param e Exercise to remove

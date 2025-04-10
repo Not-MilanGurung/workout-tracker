@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="beds.main.controllers.history.WorkoutHistoryController">
+
+    <!-- Top Bar -->
+    <top>
+        <ToolBar>
+            <Label text="Workout History" style="-fx-font-size: 18px;" />
+        </ToolBar>
+    </top>
+
+    <!-- Center: Workout list grouped by week -->
+    <center>
+        <ListView fx:id="workoutListView" />
+    </center>
+
+    <!-- Bottom: Load More Button -->
+    <bottom>
+        <VBox alignment="CENTER" >
+			<padding>
+				<Insets top="10" right="10" bottom="10" left="10"/>
+			</padding>
+			<Button fx:id="loadPreviousButton" text="Previous" onAction="#loadPreviousWorkouts" />
+            <Button fx:id="loadMoreButton" text="Next" onAction="#loadMoreWorkouts" />
+        </VBox>
+    </bottom>
+</BorderPane>

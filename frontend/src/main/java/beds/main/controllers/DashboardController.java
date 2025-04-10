@@ -22,4 +22,9 @@ public class DashboardController {
 
 		App.setRoot(root);
     }
+
+	@FXML
+	private void handleWorkoutHistory() throws IOException {
+		App.setRoot("fxmls/history/workoutHistoryView");
+	}
 }

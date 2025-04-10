@@ -103,28 +103,30 @@ public class DatabaseConnection {
 	 * @param num Number of workouts to return
 	 * @return {@link List<Workout>} List of recent workouts
 	 */
-	public static List<Workout> getRecentWorkouts(int num){
-		Connection con = getConnection();
-		PreparedStatement stmt = null;
-		try {
-			stmt = con.prepareStatement("SELECT * FROM Workouts WHERE UserID=? ORDER BY DateTime DESC LIMIT ?");
-			stmt.setInt(1, DatabaseConnection.userID);
-			stmt.setInt(2, num);
-			ResultSet res = stmt.executeQuery();
-			ArrayList<Workout> workouts = new ArrayList<Workout>();
-			while (res.next()){
-				Workout w = new Workout();
-				w.setName(res.getString("Name"));
-				w.setCompletionTime(res.getInt("CompletionTime"));
-				w.setDateTime(res.getTimestamp("DateTime").toLocalDateTime());
-				workouts.add(w);
-			}
-			return workouts;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	public static List<Workout> getWorkouts(int offset, int limit) {
+        List<Workout> result = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT Id, Name, CompletionTime, DateTime, IsRoutine FROM Workouts WHERE UserID = ? ORDER BY DateTime DESC LIMIT ? OFFSET ?"
+             )) {
+			stmt.setInt(1, userID);
+            stmt.setInt(2, limit);
+            stmt.setInt(3, offset);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(new Workout(
+                    rs.getInt("Id"),
+                    rs.getString("Name"),
+					rs.getInt("CompletionTime"),
+                    rs.getTimestamp("DateTime").toLocalDateTime(),
+                    rs.getBoolean("IsRoutine")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 	public static void storeWorkout(Workout w) throws SQLException{
 		Connection con = getConnection();

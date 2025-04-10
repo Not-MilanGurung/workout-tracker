@@ -24,6 +24,12 @@
                 <Button text="New Routine"/>
                 <Button text="Explore"/>
             </HBox>
+
+			<Label text="History" style="-fx-text-fill: white; -fx-font-size: 24;"/>
+			<HBox spacing="10">
+				<Button text="Workout History" onAction="#handleWorkoutHistory"/>
+			</HBox>
+
         </VBox>
     </center>
 </BorderPane>

@@ -30,7 +30,7 @@ public class WeeklyFrequencyGoal extends Goals {
 
 	public boolean isGoalAchievedThisWeek(LocalDateTime dateTimeOfWeek) throws SQLException {
 		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Workouts WHERE YEARWEEK(DateTime, 1) = YEARWEEK(?, 1) AND UserID = ?");
+		PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) AS WorkoutCount FROM Workouts WHERE YEARWEEK(DateTime, 1) = YEARWEEK(?, 1) AND UserID = ?");
 		stmt.setTimestamp(0, Timestamp.valueOf(dateTimeOfWeek));
 		stmt.setInt(1, DatabaseConnection.getUserID());
 		ResultSet res = stmt.executeQuery();

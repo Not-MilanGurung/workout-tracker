@@ -5,31 +5,84 @@
 <?import javafx.geometry.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="beds.main.controllers.DashboardController" 
-		stylesheets="@../css/style_1.css">
+            stylesheets="@../css/style_1.css">
+    
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #222; -fx-padding: 10;">
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #222;">
+            <padding>
+                <Insets top="10" bottom="10" left="10" right="10"/>
+            </padding>
             <Label text="Workout Tracker" style="-fx-text-fill: white; -fx-font-size: 30;"/>
         </HBox>
     </top>
 
     <center>
-        <VBox spacing="10" style="-fx-padding: 20;">
-            <!-- Quick Start -->
-            <Label text="Quick Start" style="-fx-text-fill: white; -fx-font-size: 24;"/>
-            <Button text="Start Empty Workout" onAction="#handleStartEmptyWorkout" />
+        <TabPane fx:id="dashboardTabs">
+            <Tab text="Workouts" closable="false">
+                <VBox spacing="10" >
+					<padding>
+						<Insets top="20" bottom="20" left="20" right="20"/>
+					</padding>
+                    <Label text="Quick Start" style="-fx-font-size: 18;"/>
+                    <Button text="Start Empty Workout" onAction="#handleStartEmptyWorkout"/>
 
-            <!-- Routines Section -->
-            <Label text="Routines" style="-fx-text-fill: white; -fx-font-size: 24;"/>
-            <HBox spacing="10">
-                <Button text="New Routine"/>
-                <Button text="Explore"/>
-            </HBox>
+                    <Label text="Routines" style="-fx-font-size: 18;"/>
+                    <HBox spacing="10">
+                        <Button text="New Routine"/>
+                        <Button text="Explore"/>
+                    </HBox>
+                </VBox>
+            </Tab>
 
-			<Label text="History" style="-fx-text-fill: white; -fx-font-size: 24;"/>
-			<HBox spacing="10">
-				<Button text="Workout History" onAction="#handleWorkoutHistory"/>
-			</HBox>
+            <Tab text="Goals" closable="false">
+                <VBox spacing="10" >
+					<padding>
+						<Insets top="20" bottom="20" left="20" right="20"/>
+					</padding>
+                    <Label text="Your Goals" style="-fx-font-size: 18;"/>
+                    <!-- Add goal content here -->
+                    <Button text="View/Manage Goals" onAction="#handleGoals"/>
+                </VBox>
+            </Tab>
 
-        </VBox>
+            <Tab text="History" closable="false">
+                <VBox spacing="10">
+					<padding>
+						<Insets top="20" bottom="20" left="20" right="20"/>
+					</padding>
+                    <Label text="Workout History" style="-fx-font-size: 18;"/>
+                    <Button text="View Workout History" onAction="#handleWorkoutHistory"/>
+                </VBox>
+            </Tab>
+
+            <Tab text="Profile" closable="false">
+                <VBox spacing="10" >
+					<padding>
+						<Insets top="20" bottom="20" left="20" right="20"/>
+					</padding>
+                    <!-- Current Username -->
+					<Label fx:id="currentUsernameLabel" text="current_user" style="-fx-font-size: 20" />
+
+					<!-- Update Username Section -->
+					<Label text="Update Username" style="-fx-font-size: 14;"/>
+					<TextField fx:id="newUsernameField" promptText="Enter new username"/>
+					<PasswordField fx:id="confirmUsernamePasswordField" promptText="Confirm password"/>
+					<Button text="Update Username" onAction="#handleUpdateUsername"/>
+
+					<Separator/>
+
+					<!-- Update Password Section -->
+					<Label text="Update Password" style="-fx-font-size: 14;"/>
+					<PasswordField fx:id="oldPasswordField" promptText="Current password"/>
+					<PasswordField fx:id="newPasswordField" promptText="New password"/>
+					<Button text="Update Password" onAction="#handleUpdatePassword"/>
+
+					<Separator/>
+
+					<!-- Measurement Button -->
+					<Button text="Update Measurements" onAction="#handleUpdateMeasurements"/>
+                </VBox>
+            </Tab>
+        </TabPane>
     </center>
 </BorderPane>

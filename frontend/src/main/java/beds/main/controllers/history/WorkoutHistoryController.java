@@ -110,4 +110,9 @@ public class WorkoutHistoryController {
 
 		App.setRoot(root);
     }
+
+	@FXML
+	private void handleBack() throws IOException {
+		App.setRoot("fxmls/dashboard");
+	}
 }

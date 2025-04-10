@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -18,8 +19,13 @@ public class CurrentWorkoutController {
 	@FXML private Button finishWorkoutButton;
 	@FXML private VBox exercisesVBox;
 	@FXML private Button addExerciseButton;
+	@FXML private Label headerLabel;
 
-	public void setWorkout(Workout workout){ CurrentWorkoutController.workout = workout;}
+	public void setWorkout(Workout workout){ 
+		CurrentWorkoutController.workout = workout;
+		this.headerLabel.setText("Workout: " + workout.getName());
+		this.loadOngoing();
+	}
 
 	public void loadOngoing(){
 		if (workout != null)

@@ -32,7 +32,7 @@
 
     <children>
         <!-- Header Label -->
-        <Label alignment="CENTER" text="Current Workout" GridPane.columnIndex="1">
+        <Label alignment="CENTER" fx:id="headerLabel" text="Current Workout" GridPane.columnIndex="1">
             <font>
                 <Font name="System Bold" size="32.0" />
             </font>

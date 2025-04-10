@@ -56,4 +56,69 @@ public class Authentication {
         }
         return false;
     }
+
+	public static int updateUser(String newUsername, String password) {
+		if (userExists(newUsername)) return -1;
+
+		try (Connection conn = DatabaseConnection.getConnection()) {
+			PreparedStatement stmt = conn.prepareStatement("SELECT Hash FROM Users WHERE UserID = ?");
+			stmt.setInt(1, DatabaseConnection.getUserID());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String storedHash = rs.getString("Hash");
+				if (!HashAndCheck.checkPass(password, storedHash)) {
+					return -2; // Password is incorrect
+				}
+			} else {
+				return -3; // User not found
+			}
+			stmt = conn.prepareStatement("UPDATE Users SET Username = ? WHERE UserID = ?");
+			stmt.setString(1, newUsername);
+			stmt.setInt(2, DatabaseConnection.getUserID());
+			stmt.executeUpdate();
+			return 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -3;
+	}
+
+	public static int updatePassword(String oldPassword, String newPassword) {
+		Connection con = DatabaseConnection.getConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement("SELECT Hash FROM Users WHERE UserID = ?");
+			stmt.setInt(1, DatabaseConnection.getUserID());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String storedHash = rs.getString("Hash");
+				if (!HashAndCheck.checkPass(oldPassword, storedHash)) {
+					return -1; // Password is incorrect
+				}
+			} else {
+				return -2; // User not found
+			}
+			stmt = con.prepareStatement("UPDATE Users SET Hash = ? WHERE UserID = ?");
+			stmt.setString(1, HashAndCheck.getHash(newPassword));
+			stmt.setInt(2, DatabaseConnection.getUserID());
+			stmt.executeUpdate();
+			return 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -2;
+	}
+
+	public static String getUsername() {
+		Connection conn = DatabaseConnection.getConnection();
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT Username FROM Users WHERE UserID = ?")) {
+			stmt.setInt(1, DatabaseConnection.getUserID());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString("Username");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

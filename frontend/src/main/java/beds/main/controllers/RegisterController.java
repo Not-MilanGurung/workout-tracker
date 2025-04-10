@@ -3,6 +3,7 @@ package beds.main.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
@@ -23,14 +24,26 @@ public class RegisterController {
 		String confirmPassword = confirmPasswordField.getText();
 
 		if (!password.equals(confirmPassword)) {
-			System.err.println("Passwords do not match");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Registeration Failed");
+			alert.setHeaderText("Passwords do not match");
+			alert.setContentText("Please ensure both password fields match.");
+			alert.showAndWait();
 			return;
 		}
 
 		if (Authentication.registerUser(username, password)) {
-			System.err.println("Registration successful! Go to login.");
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Registeration Successful");
+			alert.setHeaderText("Account created");
+			alert.setContentText("You can now log in with your credentials.");
+			alert.showAndWait();
 		} else {
-			System.err.println("Username already exists.");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Registeration Failed");
+			alert.setHeaderText("Username already exists");
+			alert.setContentText("Please choose a different username.");
+			alert.showAndWait();
 		}
 	}
 

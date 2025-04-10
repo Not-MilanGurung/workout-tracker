@@ -4,12 +4,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="beds.main.controllers.history.WorkoutHistoryController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" 
+	fx:controller="beds.main.controllers.history.WorkoutHistoryController"
+	stylesheets="@../../css/style_1.css">
 
     <!-- Top Bar -->
     <top>
         <ToolBar>
             <Label text="Workout History" style="-fx-font-size: 18px;" />
+			<Button fx:id="back" text="Back" onAction="#handleBack" />
         </ToolBar>
     </top>
 
@@ -20,12 +23,12 @@
 
     <!-- Bottom: Load More Button -->
     <bottom>
-        <VBox alignment="CENTER" >
+        <HBox alignment="CENTER" >
 			<padding>
 				<Insets top="10" right="10" bottom="10" left="10"/>
 			</padding>
 			<Button fx:id="loadPreviousButton" text="Previous" onAction="#loadPreviousWorkouts" />
             <Button fx:id="loadMoreButton" text="Next" onAction="#loadMoreWorkouts" />
-        </VBox>
+        </HBox>
     </bottom>
 </BorderPane>

@@ -1,6 +1,7 @@
 package beds.main.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.io.IOException;
@@ -21,7 +22,11 @@ public class LoginController {
 			App.setRoot("fxmls/dashboard");
 			// Redirect to Dashboard
 		} else {
-			System.err.println("Invalid credentials");
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Login Failed");
+			alert.setHeaderText("Invalid Credentials");
+			alert.setContentText("The username or password you entered is incorrect.");
+			alert.showAndWait();
 		}
 	}
 

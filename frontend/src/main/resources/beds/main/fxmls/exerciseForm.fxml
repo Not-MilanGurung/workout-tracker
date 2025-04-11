@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="beds.main.controllers.ExerciseFormController"
+		>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Add / Edit Exercise" style="-fx-font-size: 18px;"/>
+
+    <TextField fx:id="nameField" promptText="Exercise Name" maxWidth="300"/>
+
+    <ComboBox fx:id="metricACombo" promptText="Metric A" maxWidth="300"/>
+    <ComboBox fx:id="metricBCombo" promptText="Metric B (Optional)" maxWidth="300"/>
+
+    <ComboBox fx:id="primaryMuscleCombo" promptText="Primary Muscle Group" maxWidth="300"/>
+    <ComboBox fx:id="secondaryMuscleCombo" promptText="Secondary Muscle Group (Optional)" maxWidth="300"/>
+
+    <ComboBox fx:id="equipmentTypeCombo" promptText="Equipment Type" maxWidth="300"/>
+
+    <TextField fx:id="restTimeField" promptText="Rest Time (in seconds)" maxWidth="300"/>
+
+    <HBox >
+		<padding>
+			<Insets top="20" right="20" bottom="20" left="20"/>
+		</padding>
+        <Button fx:id="saveButton" text="Save" onAction="#handleSave"/>
+        <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel"/>
+    </HBox>
+
+</VBox>

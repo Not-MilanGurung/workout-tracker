@@ -25,11 +25,14 @@ public class DashboardController {
 	
 	@FXML private Tab historyTab;
 	@FXML private Tab goalsTab;
+	@FXML private Tab exerciseTab;
 
 	@FXML
 	private void initialize() throws IOException {
 		historyTab.setContent(FXMLLoader.load(App.class.getResource("fxmls/history/workoutHistoryView.fxml")));
 		goalsTab.setContent(FXMLLoader.load(App.class.getResource("fxmls/goals.fxml")));
+		exerciseTab.setContent(FXMLLoader.load(App.class.getResource("fxmls/exerciseForm.fxml")));
+
 
 		currentUsernameLabel.setText(Authentication.getUsername());
 	}

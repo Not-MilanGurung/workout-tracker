@@ -38,6 +38,8 @@
             <Tab fx:id="goalsTab" text="Goals" closable="false">
             </Tab>
 
+			<Tab fx:id="exerciseTab" text="Exercises" closable="false"></Tab>
+
             <Tab fx:id="historyTab" text="History" closable="false">
             </Tab>
 

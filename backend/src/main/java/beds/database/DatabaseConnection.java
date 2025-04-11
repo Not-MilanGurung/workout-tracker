@@ -238,4 +238,35 @@ public class DatabaseConnection {
 		res.close();
 		return exercises;
 	}
+
+	public static void addExercise(Exercise e) throws SQLException {
+		Connection con = getConnection();
+		PreparedStatement stmt = con.prepareStatement(
+			"INSERT INTO Exercises (UserID, Name, MetricAType, MetricBType, PrimaryMuscle, SecondaryMuscle, EquipmentType, RestTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+		stmt.setInt(1, userID);
+		stmt.setString(2, e.getName());
+		stmt.setInt(3, e.getMetricAType().getID());
+		stmt.setInt(4, e.getMetricBType().getID());
+		stmt.setInt(5, e.getPrimaryMuscle().getID());
+		stmt.setInt(6, e.getSecondaryMuscle().getID());
+		stmt.setInt(7, e.getEquipmentType().getID());
+		stmt.setInt(8, e.getRestTime());
+		stmt.executeUpdate();
+	}
+
+	public static void updateExercise(Exercise e) throws SQLException {
+		Connection con = getConnection();
+		PreparedStatement stmt = con.prepareStatement(
+			"UPDATE Exercises SET Name=?, MetricAType=?, MetricBType=?, PrimaryMuscle=?, SecondaryMuscle=?, EquipmentType=?, RestTime=? WHERE Id=? AND UserID=?");
+		stmt.setString(1, e.getName());
+		stmt.setInt(2, e.getMetricAType().getID());
+		stmt.setInt(3, e.getMetricBType().getID());
+		stmt.setInt(4, e.getPrimaryMuscle().getID());
+		stmt.setInt(5, e.getSecondaryMuscle().getID());
+		stmt.setInt(6, e.getEquipmentType().getID());
+		stmt.setInt(7, e.getRestTime());
+		stmt.setInt(8, e.getID());
+		stmt.setInt(9, userID);
+		stmt.executeUpdate();
+	}
 }

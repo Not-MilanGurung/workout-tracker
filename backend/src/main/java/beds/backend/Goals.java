@@ -3,8 +3,12 @@ package beds.backend;
 import java.time.LocalDateTime;
 
 import beds.enums.GoalType;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Goals {
+	private IntegerProperty goalID;
+	private IntegerProperty userID;
 	private LocalDateTime goalDeadLine;
 	private LocalDateTime goalAchievedDateTime;
 	private LocalDateTime goalStartDateTime;
@@ -23,6 +27,18 @@ public class Goals {
 	}
 	public void setGoalDeadLine(LocalDateTime goalDeadLine) {
 		this.goalDeadLine = goalDeadLine;
+	}
+	public int getGoalID() {
+		return goalID.get();
+	}
+	public void setGoalID(int goalID) {
+		this.goalID = new SimpleIntegerProperty(goalID);
+	}
+	public int getUserID() {
+		return userID.get();
+	}
+	public void setUserID(int userID) {
+		this.userID = new SimpleIntegerProperty(userID);
 	}
 	public LocalDateTime getGoalAchievedDateTime() {
 		return goalAchievedDateTime;

@@ -43,6 +43,13 @@ public class Workout {
 	public int getId() {return id.get();}
 	public void setId(int id) {this.id.set(id);}
 	public IntegerProperty getIdProperty() {return this.id;}
+
+	public int getTotalSets() {
+		return exercises.stream()
+			.mapToInt(e -> e.getSets().size())
+			.sum();
+	}
+
 	
 	/**
 	 * Removes the exercise from the workout

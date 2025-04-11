@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="beds.main.controllers.GoalsController" spacing="10">
+	<padding>
+		<Insets top="20" bottom="20" left="20" right="20"/>
+	</padding>
+    <Label text="Set a New Goal" style="-fx-font-size: 16;" />
+    
+    <ComboBox fx:id="goalTypeCombo" promptText="Select Goal Type"/>
+    <DatePicker fx:id="deadlinePicker"/>
+    <TextField fx:id="goalValueField" promptText="Enter goal value"/>
+    
+    <Button text="Save Goal" onAction="#handleSaveGoal"/>
+
+    <Separator />
+
+    <Label text="Your Goals" style="-fx-font-size: 16;" />
+    <TableView fx:id="goalsTable">
+        <columns>
+            <TableColumn text="Type" fx:id="typeCol"/>
+            <TableColumn text="Value" fx:id="valueCol"/>
+            <TableColumn text="Deadline" fx:id="deadlineCol"/>
+            <TableColumn text="Status" fx:id="statusCol"/>
+			<TableColumn fx:id="actionCol" text="Action"/>
+        </columns>
+    </TableView>
+</VBox>

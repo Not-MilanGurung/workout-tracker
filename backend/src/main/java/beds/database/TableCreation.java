@@ -83,7 +83,7 @@ public class TableCreation {
 						"PrimaryMuscle int,"+ 
 						"SecondaryMuscle int,"+
 						"EquipmentType int,"+
-						"RestTime INT DEFAULT 0,"+
+						"RestTime INT DEFAULT 60,"+
 						"CONSTRAINT FK_Users_Exercises FOREIGN KEY (UserID) references Users(UserID) ON DELETE CASCADE,"+
 						"CONSTRAINT FK_MetricType_Exercises_MetricA FOREIGN KEY (MetricAType) references MetricType(MetricTypeID),"+
 						"CONSTRAINT FK_MetricType_Exercises_MetricB FOREIGN KEY (MetricBType) references MetricType(MetricTypeID),"+

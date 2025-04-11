@@ -8,8 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import beds.backend.CurrentExercise;
 import beds.backend.Workout;
 import beds.database.DatabaseConnection;
 import beds.main.App;
@@ -55,6 +57,9 @@ public class WorkoutHistoryController {
 						openWorkoutDetailView(selected);
 					} catch (IOException e) {
 						e.printStackTrace();
+					} catch (SQLException e) {
+
+						e.printStackTrace();
 					}
                 }
             }
@@ -99,14 +104,19 @@ public class WorkoutHistoryController {
 	 * Opens the workout detail view for the selected workout.
 	 * @param workout
 	 * @throws IOException
+	 * @throws SQLException 
 	 */
-    private void openWorkoutDetailView(Workout workout) throws IOException {
+    private void openWorkoutDetailView(Workout workout) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/currentWorkout.fxml"));
 		Parent root = loader.load();
 
-		CurrentWorkoutController controller = loader.getController();
-		// To do: load the exercises and sets for the selected workout
+		CurrentWorkoutController controller = loader.getController();;
 		controller.setWorkout(workout);
+		for (CurrentExercise e : DatabaseConnection.getWorkoutExercises(workout.getId())) {
+			CurrentWorkoutController.addExercise(e);
+		}
+		controller.loadOngoing();
+		controller.hideFinishButton();
 
 		App.setRoot(root);
     }

@@ -76,18 +76,25 @@ public class ExerciseSelectorController {
 	private void addSelectedExercises() throws IOException {
         List<Exercise> selectedExercises = exerciseListView.getSelectionModel().getSelectedItems();
         if (selectedExercises.isEmpty()) {
-            System.out.println("No exercises selected.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select at least one exercise.", ButtonType.OK);
+			alert.setTitle("No Exercise Selected");
+			alert.showAndWait();
+		} else if (selectedExercises.size() > 5) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "You can only select up to 5 exercises.", ButtonType.OK);
+			alert.setTitle("Too Many Exercises Selected");
+			alert.showAndWait();
         } else {
             for (Exercise e : selectedExercises){
 				CurrentWorkoutController.addExercise(new CurrentExercise(e));
+			}
 				FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/currentWorkout.fxml"));
 				Parent root = loader.load();
 
 				CurrentWorkoutController controller = loader.getController();
 				controller.loadOngoing();
+				controller.startWorkoutTimer();
 
 				App.setRoot(root);
-			}
         }
     }
 }

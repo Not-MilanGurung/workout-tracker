@@ -7,6 +7,7 @@ module beds.frontend {
 	opens beds.main.controllers.history to javafx.fxml;
 
 	requires beds.backend;
+	requires javafx.base;
 
     exports beds.main;
 }

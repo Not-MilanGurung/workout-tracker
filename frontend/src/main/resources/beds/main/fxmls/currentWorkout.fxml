@@ -39,7 +39,7 @@
         </Label>
 
         <!-- Buttons -->
-        <Button fx:id="backButton" text="Back" />
+        <Button fx:id="backButton" text="Back" onAction="#handleBackOut" />
         <Button fx:id="finishButton" text="Finish" GridPane.columnIndex="2" onAction="#handleFinishWorkout">
             <font>
                 <Font size="16.0" />
@@ -48,7 +48,6 @@
 
         <!-- Stats Labels -->
         <Label fx:id="noOfSetsLabel" text="Sets: 23" GridPane.rowIndex="1" />
-        <Label fx:id="totalVolumeLabel" text="Volume: 0 kg" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Label fx:id="durationLabel" text="Duration: " GridPane.columnIndex="2" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets left="10.0" />

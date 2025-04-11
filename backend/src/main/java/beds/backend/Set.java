@@ -47,6 +47,15 @@ public class Set {
         this.isComplete = new SimpleBooleanProperty(true);
     }
 
+	public Set(int setNo,int metricA, int metricB, SetType type, int restTime, boolean isComplete) {
+		this.setNo = new SimpleIntegerProperty(setNo);
+		this.metricA = new SimpleIntegerProperty(metricA);
+		this.metricB = new SimpleIntegerProperty(metricB);
+		this.type = type;
+		this.restTime = new SimpleIntegerProperty(restTime);
+		this.isComplete = new SimpleBooleanProperty(isComplete);
+	}
+
 	public IntegerProperty getSetNoProperty() {return this.setNo;}
 	public int getSetNo() {return this.setNo.get();}
 	public void setSetNo(int setNo) {this.setNo.set(setNo);}

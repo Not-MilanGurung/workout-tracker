@@ -22,4 +22,11 @@ public class HeaviestSetGoals extends Goals {
 			return false;
 		}
 	}
+
+	public double getHeaviestWeightGoal() {
+		return heaviestWeightGoal.get();
+	}
+	public void setHeaviestWeightGoal(double heaviestWeightGoal) {
+		this.heaviestWeightGoal.set(heaviestWeightGoal);
+	}
 }

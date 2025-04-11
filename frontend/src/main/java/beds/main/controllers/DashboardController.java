@@ -1,8 +1,6 @@
 package beds.main.controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import beds.backend.Workout;
 import beds.main.App;
@@ -13,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 
 public class DashboardController {
@@ -24,6 +23,17 @@ public class DashboardController {
 
 	@FXML private Label currentUsernameLabel;
 	
+	@FXML private Tab historyTab;
+	@FXML private Tab goalsTab;
+
+	@FXML
+	private void initialize() throws IOException {
+		historyTab.setContent(FXMLLoader.load(App.class.getResource("fxmls/history/workoutHistoryView.fxml")));
+		goalsTab.setContent(FXMLLoader.load(App.class.getResource("fxmls/goals.fxml")));
+
+		currentUsernameLabel.setText(Authentication.getUsername());
+	}
+
 	@FXML
 	private void handleStartEmptyWorkout() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxmls/currentWorkout.fxml"));
@@ -31,14 +41,10 @@ public class DashboardController {
 
 		CurrentWorkoutController controller = loader.getController();
 		controller.setWorkout(new Workout());
+		controller.startWorkoutTimer();
 
 		App.setRoot(root);
     }
-
-	@FXML
-	public void initialize() {
-		currentUsernameLabel.setText(Authentication.getUsername());
-	}
 
 	@FXML
 	private void handleWorkoutHistory() throws IOException {
@@ -48,6 +54,11 @@ public class DashboardController {
 	@FXML
 	private void handleGoals() {
 		System.err.println("Goals not implemented yet");
+	}
+
+	@FXML
+	private void handleLogout() throws IOException {
+		App.setRoot("fxmls/login");
 	}
 
 	@FXML

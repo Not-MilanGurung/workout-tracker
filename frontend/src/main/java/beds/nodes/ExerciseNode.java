@@ -1,7 +1,11 @@
 package beds.nodes;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import beds.backend.CurrentExercise;
 import beds.backend.Set;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -10,8 +14,10 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.util.Duration;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.Button;
 
@@ -20,6 +26,8 @@ public class ExerciseNode extends GridPane {
 	private TableView<Set> setsTable = new TableView<Set>();
 	private final Button addSetButton;
 	private final Button removeSetButton;
+	private Label restTimerLabel = new Label("Rest: --");
+	private Timeline restCountdown;
 	
 	@SuppressWarnings("unchecked")
 	public ExerciseNode(CurrentExercise e){
@@ -48,7 +56,13 @@ public class ExerciseNode extends GridPane {
 		
 		this.setsTable.setEditable(true);
 
-		this.add(new Label(e.getName() + " (" +e.getEquipmentType() +")"), 0, 0);
+		HBox titleBox = new HBox(20); // spacing between name and timer
+		Label titleLabel = new Label(e.getName() + " (" + e.getEquipmentType() + ")");
+		titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
+		restTimerLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: #00ff99;");
+
+		titleBox.getChildren().addAll(titleLabel, restTimerLabel);
+		this.add(titleBox, 0, 0);
 		// Set no column
 		TableColumn<Set, Integer> setsNoColumn = new TableColumn<>("Set");
 		setsNoColumn.setCellValueFactory(data -> data.getValue().getSetNoProperty().asObject());
@@ -56,15 +70,17 @@ public class ExerciseNode extends GridPane {
 		// Metric A column
 		TableColumn<Set, Integer> metricA = new TableColumn<>(e.getMetricAType().toString());
 		metricA.setCellValueFactory(data -> data.getValue().getMetricAProperty().asObject());
-		metricA.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		metricA.setOnEditCommit(event -> event.getRowValue().setMetricA(event.getNewValue()));
+		metricA.setCellFactory(coll -> autoCommitIntegerCell());
+
+
+		
 		// Metric B column
 		TableColumn<Set, Integer> metricB;
 		try {
 			metricB = new TableColumn<>(e.getMetricBType().toString());
 			metricB.setCellValueFactory(data -> data.getValue().getMetricBProperty().asObject());
-			metricB.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-			metricB.setOnEditCommit(event -> event.getRowValue().setMetricB(event.getNewValue()));
+			metricB.setCellFactory(coll -> autoCommitIntegerCell());
+
 		} catch (Exception e1) {
 			metricB = new TableColumn<>("");
 		}
@@ -72,12 +88,23 @@ public class ExerciseNode extends GridPane {
 		// Completed Column (Checkbox)
         TableColumn<Set, Boolean> completedColumn = new TableColumn<>("Completed");
         completedColumn.setCellValueFactory(data -> data.getValue().getIsCompleteProperty());
-        completedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(completedColumn));
+		completedColumn.setCellFactory(coll -> {
+			CheckBoxTableCell<Set, Boolean> cell = new CheckBoxTableCell<>();
+			cell.setSelectedStateCallback(index -> {
+				Set set = setsTable.getItems().get(index);
+				set.getIsCompleteProperty().addListener((obs, oldVal, newVal) -> {
+					if (newVal) startRestTimer(set.getRestTime());
+				});
+				return set.getIsCompleteProperty();
+			});
+			return cell;
+		});
+
 		// Rest time column
 		TableColumn<Set, Integer> restTimeColumn = new TableColumn<>("Rest Time");
 		restTimeColumn.setCellValueFactory(data -> data.getValue().getRestTimProperty().asObject());
-		restTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		restTimeColumn.setOnEditCancel(event -> event.getRowValue().setRestTime(event.getNewValue()));
+		restTimeColumn.setCellFactory(coll -> autoCommitIntegerCell());
+
 
 		setsTable.getColumns().addAll(setsNoColumn, metricA, metricB, completedColumn, restTimeColumn);
 		setsTable.setItems(exercise.getSets());
@@ -97,7 +124,45 @@ public class ExerciseNode extends GridPane {
 		removeSetButton.setOnAction(event -> removeSelectedSet());
 		this.add(this.removeSetButton, 1, 2, 1, 1);
 
+		setsTable.getColumns().forEach(coll -> {
+			coll.setStyle("-fx-font-size: 14px; -fx-background-color:rgb(20, 18, 18);");
+		});
+
 	}
+
+	private TextFieldTableCell<Set, Integer> autoCommitIntegerCell() {
+		IntegerStringConverter converter = new IntegerStringConverter();
+		TextFieldTableCell<Set, Integer> cell = new TextFieldTableCell<>(converter);
+
+		cell.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+			if (!isNowFocused && cell.isEditing()) {
+				cell.commitEdit(converter.fromString(cell.getText()));
+			}
+		});
+
+		return cell;
+	}
+
+	private void startRestTimer(int initialSeconds) {
+		if (restCountdown != null) {
+			restCountdown.stop();
+		}
+
+		AtomicInteger secondsLeft = new AtomicInteger(initialSeconds);
+		restTimerLabel.setText("Rest: " + secondsLeft.get() + "s");
+
+		restCountdown = new Timeline(
+			new KeyFrame(Duration.seconds(1), event -> {
+				int remaining = secondsLeft.decrementAndGet();
+				restTimerLabel.setText("Rest: " + remaining + "s");
+			})
+		);
+		restCountdown.setCycleCount(initialSeconds);
+		restCountdown.setOnFinished(e -> restTimerLabel.setText("Rest over!"));
+		restCountdown.play();
+	}
+
+
 
 	private void addSet(){
 		int nextSetNo = exercise.getSets().size() + 1;

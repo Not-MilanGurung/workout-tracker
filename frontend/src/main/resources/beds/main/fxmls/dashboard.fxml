@@ -13,6 +13,7 @@
                 <Insets top="10" bottom="10" left="10" right="10"/>
             </padding>
             <Label text="Workout Tracker" style="-fx-text-fill: white; -fx-font-size: 30;"/>
+			<Button text="Logout" style="-fx-background-color: #444; -fx-text-fill: white;" onAction="#handleLogout"/>
         </HBox>
     </top>
 
@@ -34,25 +35,10 @@
                 </VBox>
             </Tab>
 
-            <Tab text="Goals" closable="false">
-                <VBox spacing="10" >
-					<padding>
-						<Insets top="20" bottom="20" left="20" right="20"/>
-					</padding>
-                    <Label text="Your Goals" style="-fx-font-size: 18;"/>
-                    <!-- Add goal content here -->
-                    <Button text="View/Manage Goals" onAction="#handleGoals"/>
-                </VBox>
+            <Tab fx:id="goalsTab" text="Goals" closable="false">
             </Tab>
 
-            <Tab text="History" closable="false">
-                <VBox spacing="10">
-					<padding>
-						<Insets top="20" bottom="20" left="20" right="20"/>
-					</padding>
-                    <Label text="Workout History" style="-fx-font-size: 18;"/>
-                    <Button text="View Workout History" onAction="#handleWorkoutHistory"/>
-                </VBox>
+            <Tab fx:id="historyTab" text="History" closable="false">
             </Tab>
 
             <Tab text="Profile" closable="false">

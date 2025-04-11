@@ -16,6 +16,7 @@ import beds.backend.Workout;
 import beds.enums.EquipmentType;
 import beds.enums.MetricType;
 import beds.enums.MuscleGroup;
+import beds.enums.SetType;
 
 
 /** This class handles the singleton connection to the database */
@@ -168,7 +169,7 @@ public class DatabaseConnection {
 					"INSERT INTO Sets VALUES(?, ?, ?, ?, ?, ?)");
 				CurrentExercise ex = exercises.get(i);
 				for (Set set : ex.getSets()){
-					stmt.setInt(1, ex.getSets().indexOf(set));
+					stmt.setInt(1, ex.getSets().indexOf(set) + 1);
 					stmt.setInt(2, workoutExerciseId);
 					stmt.setInt(3, set.getMetricA());
 					stmt.setInt(4, set.getMetricB());
@@ -184,5 +185,57 @@ public class DatabaseConnection {
 		}
 		workouResultSet.close();
 
+	}
+
+	public static List<CurrentExercise> getWorkoutExercises(int workoutID) throws SQLException{
+		Connection con = getConnection();
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM WorkoutExercise WHERE WorkoutID=? ORDER BY OrderNo");
+		stmt.setInt(1, workoutID);
+		ResultSet res = stmt.executeQuery();
+
+		List<CurrentExercise> exercises = new ArrayList<CurrentExercise>();
+		int exerciseId, workoutExerciseId;
+		while (res.next()){
+			workoutExerciseId = res.getInt("Id");
+			exerciseId = res.getInt("ExerciseID");
+
+			stmt = con.prepareStatement("SELECT * FROM Exercises WHERE Id=?");
+			stmt.setInt(1, exerciseId);
+			ResultSet res2 = stmt.executeQuery();
+
+			CurrentExercise ex = null;
+			while (res2.next()){
+				ex = new CurrentExercise(res2.getInt("Id"), 
+					res2.getString("Name"),
+					MetricType.getByID(res2.getInt("MetricAType")), 
+					MetricType.getByID(res2.getInt("MetricBType")), 
+					MuscleGroup.getByID(res2.getInt("PrimaryMuscle")), 
+					MuscleGroup.getByID(res2.getInt("SecondaryMuscle")), 
+					EquipmentType.getByID(res2.getInt("EquipmentType")), 
+					res2.getInt("RestTime"));
+				
+			}
+
+			stmt = con.prepareStatement("SELECT * FROM Sets WHERE WorkoutExerciseID=?");
+			stmt.setInt(1, workoutExerciseId);
+
+			ResultSet res3 = stmt.executeQuery();
+			while (res3.next()){
+				Set set = new Set(res3.getInt("SetNo"), 
+					res3.getInt("MetricA"), 
+					res3.getInt("MetricB"),
+					SetType.getSetType(res3.getInt("SetType")), 
+					res3.getInt("RestTime"), 
+					true);
+				ex.addSet(set);
+			}
+			exercises.add(ex);
+			res2.close();
+			res3.close();
+			
+		}
+		stmt.close();
+		res.close();
+		return exercises;
 	}
 }
